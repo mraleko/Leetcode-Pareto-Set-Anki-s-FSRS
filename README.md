@@ -1,106 +1,54 @@
-# Pareto LeetCode Study System
+# Pareto LeetCode: Anki-Only System
 
-This folder gives you one source of truth for progress and one scheduler for reviews:
+The spreadsheet is not required. Use **Anki as the single app** for your queue, notes, progress, and spaced-repetition schedule. You will still write and submit code on LeetCode through the link on each card.
 
-- `pareto-tracker.csv`: the 49 problems from the image, in order, with direct LeetCode links.
-- `anki-import.tsv`: recall cards for Anki's FSRS scheduler.
-- Anki decides **when** to review. The tracker records **what happened**. Do not manually schedule review dates in the tracker.
+The deck contains all 49 problems in order. Every card tells you what to do, how long to spend, exactly what to record, and how to grade the attempt. Anki's New, Learning, and Review counts are your progress tracker.
 
-No system can guarantee that you will "never forget" a solution. FSRS estimates when recall is becoming less likely and schedules retrieval practice before too much is lost. A 90% target deliberately permits some forgetting because trying to force 100% creates an unmanageable number of reviews.
+No system can literally guarantee that you never forget. FSRS schedules reviews around a target probability of recall; `0.90` is a practical balance rather than an impossible 100% promise.
 
-## One-Time Setup
+## Set Up Once
 
-### 1. Tracker
+1. Install the current [Anki Desktop](https://apps.ankiweb.net/).
+2. Open `Pareto-LeetCode.apkg`. Anki will import a `Pareto LeetCode` deck with 49 cards.
+3. Click the gear beside the deck, then **Options**.
+4. Set **New cards/day** to `1` and **Maximum reviews/day** to `9999`.
+5. Set **New card gather order** to `Ascending position` and **New/review order** to `Show after reviews`.
+6. Enable **FSRS**, set **Desired retention** to `0.90`, and leave its parameters at the defaults for now.
 
-Open `pareto-tracker.csv` in Google Sheets, Excel, or Numbers. In Google Sheets, use **File > Import > Upload > Replace spreadsheet**. Freeze row 1 and turn on a filter.
+Do not suspend the cards. One new card per day means Anki gives you the next problem automatically after all due reviews. Missing a day does not create a pile of new problems; continue when you return.
 
-Use these exact status values:
+## Every Day
 
-- `Not Started`: no serious attempt yet.
-- `Learning`: attempted but needed a hint, editorial, or solution.
-- `Review`: accepted once and added to Anki.
-- `Interview Ready`: independently accepted from scratch on two separate days, with a clear explanation of complexity and edge cases.
+1. Open only the `Pareto LeetCode` deck.
+2. Complete every due review Anki presents.
+3. Complete the one new problem Anki presents.
+4. Follow the instructions on the card and code through its LeetCode link.
+5. On the back, press `E` and fill the six prompted note fields in your own words.
+6. Choose `Again`, `Hard`, `Good`, or `Easy` using the rubric printed on the card.
+7. Stop when Anki says the deck is finished for today.
 
-`Solved_Independently` means no hints, notes, old submissions, or autocomplete from a previous solution. An accepted result after reading a solution is useful learning, but it is not independent.
+If the session reaches 90 minutes, finish due reviews but postpone the new card. If reviews take more than 45 minutes for three consecutive days, temporarily set **New cards/day** to `0` until the review load settles.
 
-### 2. Anki and FSRS
+## Record Only This
 
-1. Install [Anki Desktop](https://apps.ankiweb.net/). Use a current release with FSRS support.
-2. In Anki, choose **File > Import** and select `anki-import.tsv`.
-3. Confirm note type `Basic`, deck `Pareto LeetCode`, HTML enabled, and columns mapped to `Front`, `Back`, and `Tags`.
-4. Open **Browse**, select the new `Pareto LeetCode` deck, select all cards, and choose **Cards > Toggle Suspend**. All 49 should initially appear yellow/suspended.
-5. Open the deck's **Options**. Enable FSRS if it is not already enabled, set desired retention to `0.90`, and leave the FSRS parameters at their defaults until you have substantial review history.
-6. Set new cards/day high enough that it is not a bottleneck; suspended cards will still keep unseen problems out of reviews.
+Each problem has six fields. Keep each to one sentence:
 
-Only unsuspend a card after the corresponding problem has an accepted submission and you understand the solution. This prevents Anki from treating an unseen problem as a failed memory.
+1. **Pattern / data structure:** the reusable technique, not a walkthrough.
+2. **Recognition trigger:** clues that should make you consider that technique in a new problem.
+3. **Invariant / why it works:** what remains true while the algorithm runs.
+4. **Complexity:** time and space, including what variables mean.
+5. **Mistake and prevention rule:** your specific failure and a rule that prevents it.
+6. **Important edge case:** one concrete input that can break a careless implementation.
 
-After the first accepted solve, edit that card's `Back` and replace the placeholder with your own 2-5 bullets:
+Do not paste solution code. Your accepted submissions already preserve code; these notes should help you reconstruct the idea.
 
-```text
-Pattern/data structure:
-Key invariant or decision:
-Edge case I missed:
-Time: O(...), Space: O(...)
-```
+## Grade Honestly
 
-Do not paste full solution code. The goal is to remember a reusable idea and reconstruct an implementation, not memorize lines.
+- **Again:** you could not find the approach, used any help, or did not finish.
+- **Hard:** you solved without help but exceeded the review time limit or had a substantial bug.
+- **Good:** you solved without help, within the limit, and explained why it works.
+- **Easy:** the implementation and explanation were immediate and clean. Use rarely.
 
-## Daily Workflow
+For FSRS, forgetting is always **Again**, never **Hard**. The Anki manual explicitly treats Hard as successful recall. After a failed review, update the mistake field before grading.
 
-Do all due Anki reviews **before** learning a new problem. Reviews are the commitment; new problems are optional when the review queue is not clear.
-
-For each new problem, work in the order listed in the tracker:
-
-1. Open its `LeetCode_URL`; code only in LeetCode.
-2. Spend 3-5 minutes restating inputs, outputs, constraints, and examples.
-3. Attempt without help: up to 20 minutes for Easy or 35 minutes for Medium.
-4. If stuck, seek the smallest useful hint first: pattern, then invariant/pseudocode, then editorial. Avoid passively watching a complete solution.
-5. After using help, close it and produce an accepted solution again from a blank LeetCode editor.
-6. Fill the tracker while the mistake is fresh. `Key_Insight` and `Mistake_or_Gap` should each be one specific sentence.
-7. Change status to `Review`, update the card's Back, and unsuspend it in Anki.
-
-Stop after 75-90 focused minutes. Consistency and honest review grades beat high problem counts.
-
-## How to Review a Card
-
-Before revealing the back:
-
-1. Open the linked LeetCode problem without opening an old submission.
-2. State the pattern, invariant, complexity, and important edge cases.
-3. Implement from the provided signature in a blank editor. Use a 10-minute cap for Easy and 15 minutes for Medium during reviews.
-4. Reveal your card, compare with your tracker/accepted submission, and grade the attempt honestly.
-
-Use Anki's buttons this way:
-
-- **Again**: could not identify the approach, used notes/hints, or produced a fundamentally wrong solution.
-- **Hard**: right approach but needed more than the time cap, had a significant bug, or missed an important edge case/complexity.
-- **Good**: independently implemented a correct solution within the cap and explained why it works.
-- **Easy**: immediate, clean, correct implementation and explanation with substantial time left. Use this rarely.
-
-If you press **Again** or **Hard**, update `Mistake_or_Gap` with the new failure mode. Do not reset or manually reschedule the card; FSRS adapts from your grade.
-
-## Seven-Week Ramp
-
-Aim for seven new problems per week while keeping every due review current. This completes the set in seven weeks:
-
-| Week | Problems | Topics |
-| --- | --- | --- |
-| 1 | 1-7 | Arrays & Hashing |
-| 2 | 8-14 | Arrays, Two Pointers, Sliding Window |
-| 3 | 15-21 | Sliding Window, Stack, Binary Search |
-| 4 | 22-28 | Linked Lists, first Tree problem |
-| 5 | 29-35 | Trees |
-| 6 | 36-42 | Trees, Heap / Priority Queue |
-| 7 | 43-49 | Graphs |
-
-A sustainable week is five learning days with one new problem each, one weekend session with two new problems, and one catch-up/rest day. If due reviews exceed about 45 minutes for three days in a row, stop adding new cards until the queue settles.
-
-## Interview Phase
-
-After all 49 are introduced, keep doing FSRS reviews and add two 45-minute mock sessions per week:
-
-- Pick an unseen or forgotten Easy/Medium rather than a card that is already due.
-- Spend 5 minutes clarifying, 25-30 minutes coding, and 10 minutes testing/explaining.
-- Practice narrating tradeoffs and tests; interview performance is broader than recalling these 49 solutions.
-
-Two weeks before an interview, raise desired retention from `0.90` to `0.93` if the projected workload in Anki remains manageable. Do not use `1.00`.
+`pareto-tracker.csv` remains only as a readable backup list of links. You do not need to open or maintain it.
