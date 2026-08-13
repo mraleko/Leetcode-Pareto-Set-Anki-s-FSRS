@@ -7,7 +7,7 @@ A guided Anki deck for learning and retaining 49 high-value interview problems. 
 1. Install the current [Anki Desktop](https://apps.ankiweb.net/).
 2. Open [`Pareto-LeetCode.apkg`](Pareto-LeetCode.apkg) to import the deck.
 3. Click the gear beside `Pareto LeetCode`, then select **Options**.
-4. Set **New cards/day** to `1` and **Maximum reviews/day** to `9999`.
+4. Set **New cards/day** to `1` for a seven-week pace or `2` for a 25-study-day pace. Set **Maximum reviews/day** to `9999`.
 5. Set **New card gather order** to `Ascending position`.
 6. Set **New/review order** to `Show after reviews`.
 7. Enable **FSRS**, set **Desired retention** to `0.90`, and keep the default parameters.
@@ -16,7 +16,7 @@ The deck is then ready. Open it each study day and follow the card on screen.
 
 ## Daily Session
 
-Anki first presents every review due that day, followed by one new problem. Each card includes the LeetCode link, attempt instructions, and appropriate time limits.
+Anki first presents every review due that day, followed by the number of new problems selected in **New cards/day**. Each card includes the LeetCode link, attempt instructions, and appropriate time limits.
 
 For every card:
 
@@ -64,7 +64,14 @@ If stuck during a first attempt, request the smallest useful hint: pattern first
 
 ## Study Load
 
-At one new problem per day, the initial pass takes seven weeks. Reviews accumulate during that period, so completing due reviews takes priority over introducing new material.
+Choose a pace based on the time you can sustain:
+
+| New cards/day | Study days | Typical schedule |
+| ---: | ---: | --- |
+| 1 | 49 | About seven weeks when studying daily |
+| 2 | 25 | About 3.5 weeks daily, four weeks at six days/week, or five weekdays-only weeks |
+
+Two new cards can require 45-120 minutes as FSRS reviews accumulate, especially when both problems are Medium. Completing due reviews always takes priority over introducing new material.
 
 If reviews take more than 45 minutes for three consecutive days, set **New cards/day** to `0` until the queue settles. Two weeks before an interview, consider raising desired retention to `0.93` if Anki's projected workload remains manageable.
 
