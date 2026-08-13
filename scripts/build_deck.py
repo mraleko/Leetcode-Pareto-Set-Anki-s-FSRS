@@ -5,7 +5,7 @@ from pathlib import Path
 import genanki
 
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parents[1]
 
 MODEL = genanki.Model(
     1846359201,
@@ -142,7 +142,7 @@ DECK = genanki.Deck(
     ),
 )
 
-with (ROOT / "pareto-tracker.csv").open(newline="", encoding="utf-8") as source:
+with (ROOT / "data" / "problems.csv").open(newline="", encoding="utf-8") as source:
     for row in csv.DictReader(source):
         order = int(row["Order"])
         note = genanki.Note(

@@ -1,54 +1,91 @@
-# Pareto LeetCode: Anki-Only System
+# Pareto LeetCode Study System
 
-The spreadsheet is not required. Use **Anki as the single app** for your queue, notes, progress, and spaced-repetition schedule. You will still write and submit code on LeetCode through the link on each card.
+A guided Anki deck for learning and retaining 49 high-value interview problems. It presents the problems in a deliberate order, links each assignment directly to LeetCode, captures concise solution notes, and uses FSRS to schedule future reviews.
 
-The deck contains all 49 problems in order. Every card tells you what to do, how long to spend, exactly what to record, and how to grade the attempt. Anki's New, Learning, and Review counts are your progress tracker.
-
-No system can literally guarantee that you never forget. FSRS schedules reviews around a target probability of recall; `0.90` is a practical balance rather than an impossible 100% promise.
-
-## Set Up Once
+## Quick Start
 
 1. Install the current [Anki Desktop](https://apps.ankiweb.net/).
-2. Open `Pareto-LeetCode.apkg`. Anki will import a `Pareto LeetCode` deck with 49 cards.
-3. Click the gear beside the deck, then **Options**.
+2. Open [`Pareto-LeetCode.apkg`](Pareto-LeetCode.apkg) to import the deck.
+3. Click the gear beside `Pareto LeetCode`, then select **Options**.
 4. Set **New cards/day** to `1` and **Maximum reviews/day** to `9999`.
-5. Set **New card gather order** to `Ascending position` and **New/review order** to `Show after reviews`.
-6. Enable **FSRS**, set **Desired retention** to `0.90`, and leave its parameters at the defaults for now.
+5. Set **New card gather order** to `Ascending position`.
+6. Set **New/review order** to `Show after reviews`.
+7. Enable **FSRS**, set **Desired retention** to `0.90`, and keep the default parameters.
 
-Do not suspend the cards. One new card per day means Anki gives you the next problem automatically after all due reviews. Missing a day does not create a pile of new problems; continue when you return.
+The deck is then ready. Open it each study day and follow the card on screen.
 
-## Every Day
+## Daily Session
 
-1. Open only the `Pareto LeetCode` deck.
-2. Complete every due review Anki presents.
-3. Complete the one new problem Anki presents.
-4. Follow the instructions on the card and code through its LeetCode link.
-5. On the back, press `E` and fill the six prompted note fields in your own words.
-6. Choose `Again`, `Hard`, `Good`, or `Easy` using the rubric printed on the card.
-7. Stop when Anki says the deck is finished for today.
+Anki first presents every review due that day, followed by one new problem. Each card includes the LeetCode link, attempt instructions, and appropriate time limits.
 
-If the session reaches 90 minutes, finish due reviews but postpone the new card. If reviews take more than 45 minutes for three consecutive days, temporarily set **New cards/day** to `0` until the review load settles.
+For every card:
 
-## Record Only This
+1. Open the linked problem on LeetCode without looking at an old submission.
+2. State a brute-force approach and its complexity.
+3. Identify a likely pattern and the invariant that makes it work.
+4. Implement and test the solution on LeetCode.
+5. Reveal the card, press `E`, and update the six recall fields.
+6. Grade the attempt with the rubric shown on the card.
 
-Each problem has six fields. Keep each to one sentence:
+Stop when Anki says the deck is complete for the day. If a session reaches 90 minutes, finish due reviews and leave the new problem for another day.
 
-1. **Pattern / data structure:** the reusable technique, not a walkthrough.
-2. **Recognition trigger:** clues that should make you consider that technique in a new problem.
-3. **Invariant / why it works:** what remains true while the algorithm runs.
-4. **Complexity:** time and space, including what variables mean.
-5. **Mistake and prevention rule:** your specific failure and a rule that prevents it.
-6. **Important edge case:** one concrete input that can break a careless implementation.
+## Recall Notes
 
-Do not paste solution code. Your accepted submissions already preserve code; these notes should help you reconstruct the idea.
+Record one sentence in each field after the first accepted solution. Update a field whenever a later attempt reveals a better insight or a new failure mode.
 
-## Grade Honestly
+| Field | What to record |
+| --- | --- |
+| Pattern / data structure | The reusable technique, not an implementation walkthrough |
+| Recognition trigger | Clues that should suggest this technique in a new problem |
+| Invariant / why it works | What remains true while the algorithm runs |
+| Complexity | Time and space, including what each variable represents |
+| Mistake and prevention rule | The specific failure and a rule that prevents it next time |
+| Important edge case | One concrete input that could break a careless implementation |
 
-- **Again:** you could not find the approach, used any help, or did not finish.
-- **Hard:** you solved without help but exceeded the review time limit or had a substantial bug.
-- **Good:** you solved without help, within the limit, and explained why it works.
-- **Easy:** the implementation and explanation were immediate and clean. Use rarely.
+Keep full solution code in LeetCode submissions. These notes are prompts for reconstructing the reasoning rather than memorizing source code.
 
-For FSRS, forgetting is always **Again**, never **Hard**. The Anki manual explicitly treats Hard as successful recall. After a failed review, update the mistake field before grading.
+## Review Grades
 
-`pareto-tracker.csv` remains only as a readable backup list of links. You do not need to open or maintain it.
+- **Again:** You could not identify the approach, used help, or did not finish.
+- **Hard:** You solved without help but exceeded the review limit or had a substantial bug.
+- **Good:** You solved without help, within the limit, and explained why it works.
+- **Easy:** The implementation and explanation were immediate and clean. Use this rarely.
+
+Forgetting is always **Again**, not **Hard**. FSRS treats Hard as successful recall and will produce poor intervals if it is used for failed attempts.
+
+## Time Limits
+
+| Attempt | Easy | Medium |
+| --- | ---: | ---: |
+| First attempt | 20 minutes | 35 minutes |
+| Review | 10 minutes | 15 minutes |
+
+If stuck during a first attempt, request the smallest useful hint: pattern first, then invariant or pseudocode, then the editorial. Close the help and implement again from a blank LeetCode editor before recording the result.
+
+## Study Load
+
+At one new problem per day, the initial pass takes seven weeks. Reviews accumulate during that period, so completing due reviews takes priority over introducing new material.
+
+If reviews take more than 45 minutes for three consecutive days, set **New cards/day** to `0` until the queue settles. Two weeks before an interview, consider raising desired retention to `0.93` if Anki's projected workload remains manageable.
+
+FSRS cannot guarantee perfect memory. A `0.90` target means cards are scheduled around a 90% probability of successful recall, balancing retention with a sustainable review load.
+
+## Repository Layout
+
+```text
+.
+|-- Pareto-LeetCode.apkg    # Import this deck into Anki
+|-- data/
+|   `-- problems.csv        # Ordered Pareto problem catalog
+|-- scripts/
+|   `-- build_deck.py       # Generates the Anki package
+|-- README.md
+`-- requirements.txt
+```
+
+To regenerate the deck:
+
+```bash
+python3 -m pip install -r requirements.txt
+python3 scripts/build_deck.py
+```
